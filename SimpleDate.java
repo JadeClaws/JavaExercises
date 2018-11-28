@@ -21,10 +21,11 @@ public class SimpleDate implements Comparable<SimpleDate> {
     SimpleDate(int day, int month, int year) {
             
         try {
-            checkParameters(day, month, year);
-            this.day = day;
-            this.month = month;
-            this.year = year;
+            if(checkParameters(day, month, year)) {
+                this.day = day;
+                this.month = month;
+                this.year = year;
+            }
         } catch(InvalidSimpleDateException e) {
             e.printStackTrace(System.out);
         }      
@@ -109,8 +110,12 @@ public class SimpleDate implements Comparable<SimpleDate> {
     
     
     public static void main() {
-        SimpleDate dateFrom = new SimpleDate(22, 11, 2018);
-        SimpleDate dateTo = new SimpleDate(26, 11, 2018);
+        //testing
+        SimpleDate date = new SimpleDate(31, 2, 2018);
+        
+        //testing ranges
+        SimpleDate dateFrom = new SimpleDate(14, 11, 2018);
+        SimpleDate dateTo = new SimpleDate(24, 11, 2018);
         SimpleDate dateRangeFrom = new SimpleDate(10, 11, 2018);
         SimpleDate dateRangeTo = new SimpleDate(20, 11, 2018);
         
