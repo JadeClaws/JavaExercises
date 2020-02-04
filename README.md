@@ -1,4 +1,4 @@
-# Java Simple Exercises
+# Java Exercises
 
 Repozytorium zawiera krótkie ćwiczenia w języku JAVA
 
