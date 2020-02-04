@@ -41,15 +41,20 @@ class StringDecimalsConversion {
                 decimalSeparatorPos = strNum.length() - decimalSeparatorPos;              
                 strNum = strNum.replaceAll("\\,", "");
                 strNum = strNum.replaceAll("\\.", "");
-                strNum = String.format( "%s.%s", 
+                strNum = String.format( "%s,%s", 
                                         strNum.substring(0, strNum.length() - decimalSeparatorPos + 1), 
                                         strNum.substring(strNum.length() - decimalSeparatorPos + 1, strNum.length()));
             }
                        
             // step 3. convert to real
-            realNum = Double.parseDouble(strNum);
-            
-            System.out.format(" -> %f", realNum);
+            try {
+                realNum = Double.parseDouble(strNum);
+                
+                System.out.format(" -> %f", realNum);
+            } catch (NumberFormatException e) {
+                System.out.println(e.getMessage());
+                e.printStackTrace(System.out);
+            }          
         }
     }
 }
