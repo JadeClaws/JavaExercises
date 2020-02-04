@@ -1,10 +1,10 @@
 class StringDecimalsConversion {
     public static void test() {
-        LinkedList <String> listDecimalsStr; // input - list of decimals in different formats
-        Iterator iterator;
-        String strNum;                  // decimal as String
-        Double realNum;                 // decimal as Real
-        Integer decimalSeparatorPos;    // position of decimal separator (from right)
+        LinkedList <String>     listDecimalsStr;        // input - list of decimals in different formats
+        Iterator                iterator;
+        String                  strNum;                 // decimal as String
+        Double                  realNum;                // decimal as Real
+        Integer                 decimalSeparatorPos;    // position of decimal separator (from right)
         
         listDecimalsStr = new LinkedList<>();
         
@@ -38,7 +38,7 @@ class StringDecimalsConversion {
             decimalSeparatorPos = Integer.max(strNum.lastIndexOf("."), strNum.lastIndexOf(","));
             
             if (decimalSeparatorPos > 0) {
-                decimalSeparatorPos = strNum.length() - decimalSeparatorPos;
+                decimalSeparatorPos = strNum.length() - decimalSeparatorPos;              
                 strNum = strNum.replaceAll("\\,", "");
                 strNum = strNum.replaceAll("\\.", "");
                 strNum = String.format( "%s.%s", 
