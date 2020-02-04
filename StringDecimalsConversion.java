@@ -32,7 +32,7 @@ class StringDecimalsConversion {
             // step 1. delete space thousand separators
             strNum = strNum.replace(" ", ""); 
             
-            // step 2. find decimal separator replace it with comma and remove all other separators
+            // step 2. find decimal separator replace it with dot and remove all other separators
             decimalSeparatorPos = Integer.max(strNum.lastIndexOf("."), strNum.lastIndexOf(","));
             
             if (decimalSeparatorPos > 0) {
