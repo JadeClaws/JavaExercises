@@ -21,6 +21,8 @@ class StringDecimalsConversion {
         listDecimalsStr.add("34.560001");
         listDecimalsStr.add("4,5601");
         listDecimalsStr.add("1 234 567 890");
+        listDecimalsStr.add("1,000,000.01");
+        listDecimalsStr.add("1.000.000,01");
        
         iterator = listDecimalsStr.iterator();
         
