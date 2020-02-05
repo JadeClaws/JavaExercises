@@ -55,3 +55,48 @@ class StringDecimalsConversion {
               
         return null;
     }
+    
+    
+    public static void test() {
+        LinkedList <String>     listDecimalsStr;        // input - list of decimals in different formats
+        Iterator                iterator;
+        String                  strNum;                 // decimal as String
+        Double                  realNum;                // decimal as Real
+    
+        
+        listDecimalsStr = new LinkedList<>();
+        
+        listDecimalsStr.add("1234,56");
+        listDecimalsStr.add("1234.56");
+        listDecimalsStr.add("1 234.56");
+        listDecimalsStr.add("1 234,56");
+        listDecimalsStr.add("1,234.56");
+        listDecimalsStr.add("1.234,56");
+        listDecimalsStr.add("1.234,5632");
+        listDecimalsStr.add("1.234,56456");
+        listDecimalsStr.add("1 234.561");
+        listDecimalsStr.add("1234,5");
+        listDecimalsStr.add("34.560001");
+        listDecimalsStr.add("4,5601");
+        listDecimalsStr.add("1 234 567 890");
+        listDecimalsStr.add("1,000,000.01");
+        listDecimalsStr.add("1.000.000,01");
+        listDecimalsStr.add("1.000.000");
+        listDecimalsStr.add("3,456,789");
+        listDecimalsStr.add("2 333 444");
+        listDecimalsStr.add("1 333,444.555");       // error
+        listDecimalsStr.add("abcd");                // error
+       
+        iterator = listDecimalsStr.iterator();
+        
+        while (iterator.hasNext()) {
+            strNum = (String) iterator.next();
+            
+            System.out.format("\n \"%s\" -> ", strNum);
+            
+            realNum = StringDecimalsConversion.StringToDouble(strNum);
+            
+            if (realNum != null) System.out.format("%f", realNum);         
+        }
+    }
+}
