@@ -58,45 +58,45 @@ class StringDecimalsConversion {
     
     
     public static void test() {
-        LinkedList <String>     listDecimalsStr;        // input - list of decimals in different formats
-        Iterator                iterator;
-        String                  strNum;                 // decimal as String
-        Double                  realNum;                // decimal as Real
-    
-        
-        listDecimalsStr = new LinkedList<>();
-        
-        listDecimalsStr.add("1234,56");
-        listDecimalsStr.add("1234.56");
-        listDecimalsStr.add("1 234.56");
-        listDecimalsStr.add("1 234,56");
-        listDecimalsStr.add("1,234.56");
-        listDecimalsStr.add("1.234,56");
-        listDecimalsStr.add("1.234,5632");
-        listDecimalsStr.add("1.234,56456");
-        listDecimalsStr.add("1 234.561");
-        listDecimalsStr.add("1234,5");
-        listDecimalsStr.add("34.560001");
-        listDecimalsStr.add("4,5601");
-        listDecimalsStr.add("1 234 567 890");
-        listDecimalsStr.add("1,000,000.01");
-        listDecimalsStr.add("1.000.000,01");
-        listDecimalsStr.add("1.000.000");
-        listDecimalsStr.add("3,456,789");
-        listDecimalsStr.add("2 333 444");
-        listDecimalsStr.add("1 333,444.555");       // error
-        listDecimalsStr.add("abcd");                // error
+        Map <String, Double>    mapTestStringDecimals;  // input - map of list decimals and expected results
        
-        iterator = listDecimalsStr.iterator();
         
-        while (iterator.hasNext()) {
-            strNum = (String) iterator.next();
+        mapTestStringDecimals = new LinkedHashMap<>(); // to preserve input order
+        
+        mapTestStringDecimals.put("1234,56", 		1234.56);		
+        mapTestStringDecimals.put("1234.56", 		1234.56);		
+        mapTestStringDecimals.put("1 234.56", 		1234.56);		
+        mapTestStringDecimals.put("1 234,56", 		1234.56);		
+        mapTestStringDecimals.put("1,234.56", 		1234.56);		
+        mapTestStringDecimals.put("1.234,56", 		1234.56);		
+        mapTestStringDecimals.put("1.234,5632", 	1234.5632);		
+        mapTestStringDecimals.put("1.234,56456", 	1234.56456);	
+        mapTestStringDecimals.put("1 234.561", 		1234.561);		
+        mapTestStringDecimals.put("1234,5", 		1234.5);		
+        mapTestStringDecimals.put("34.560001", 		34.560001);		
+        mapTestStringDecimals.put("4,5601", 		4.5601);		
+        mapTestStringDecimals.put("1 234 567 890", 	1234567890.00);	
+        mapTestStringDecimals.put("1,000,000.01", 	1000000.01);	
+        mapTestStringDecimals.put("1.000.000,01", 	1000000.01);	
+        mapTestStringDecimals.put("1.000.000", 		1000000.00);	
+        mapTestStringDecimals.put("3,456,789", 		3456789.00);	
+        mapTestStringDecimals.put("2 333 444", 		2333444.00);	
+        mapTestStringDecimals.put("1 333,444.555", 	null);			
+        mapTestStringDecimals.put("abcd",               null);	
+        
+        mapTestStringDecimals.entrySet().forEach(new Consumer<Map.Entry<String, Double>>() {
+            Double tmp;
             
-            System.out.format("\n \"%s\" -> ", strNum);
-            
-            realNum = StringDecimalsConversion.StringToDouble(strNum);
-            
-            if (realNum != null) System.out.format("%f", realNum);         
-        }
+            @Override public void accept(Map.Entry<String, Double> e) {
+                System.out.format("\n\"%s\" -> ", e.getKey());
+                
+                tmp = StringDecimalsConversion.StringToDouble(e.getKey());
+                
+                if (tmp != null) {
+                    System.out.format("%f", tmp);
+                    System.out.format(" (%s)", tmp.equals(e.getValue()) ? "OK" : "WRONG");
+                }                              
+            }
+        });
     }
 }
