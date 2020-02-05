@@ -1,60 +1,57 @@
 class StringDecimalsConversion {
-    public static void test() {
-        LinkedList <String>     listDecimalsStr;        // input - list of decimals in different formats
-        Iterator                iterator;
-        String                  strNum;                 // decimal as String
-        Double                  realNum;                // decimal as Real
-        Integer                 decimalSeparatorPos;    // position of decimal separator (from right)
+    
+    static class WrongDecimalFormatException extends Exception {
+        @Override public String getMessage() { return "Given string is not a properly formatted decimal"; }
+    }
+    
+    
+    public static Double StringToDouble(String strNum) {
+        Integer decimalSeparatorPos;            // position of decimal separator (from right)
+        Double  doubleNum;                      // decimal as Double  
+        Integer numberOfDifferentSeparators;
         
-        listDecimalsStr = new LinkedList<>();
+        // step 1. analyze string and find decimal separator
+        numberOfDifferentSeparators = 0;
+        if (strNum.contains(".")) numberOfDifferentSeparators++;
+        if (strNum.contains(",")) numberOfDifferentSeparators++;
+        if (strNum.contains(" ")) numberOfDifferentSeparators++;
         
-        listDecimalsStr.add("1234,56");
-        listDecimalsStr.add("1234.56");
-        listDecimalsStr.add("1 234.56");
-        listDecimalsStr.add("1 234,56");
-        listDecimalsStr.add("1,234.56");
-        listDecimalsStr.add("1.234,56");
-        listDecimalsStr.add("1.234,5632");
-        listDecimalsStr.add("1.234,56456");
-        listDecimalsStr.add("1 234.561");
-        listDecimalsStr.add("1234,5");
-        listDecimalsStr.add("34.560001");
-        listDecimalsStr.add("4,5601");
-        listDecimalsStr.add("1 234 567 890");
-        listDecimalsStr.add("1,000,000.01");
-        listDecimalsStr.add("1.000.000,01");
-       
-        iterator = listDecimalsStr.iterator();
-        
-        while (iterator.hasNext()) {
-            strNum = (String) iterator.next();
-            
-            System.out.format("\n \"%s\"", strNum);
-            
-            // step 1. delete space thousand separators
-            strNum = strNum.replace(" ", ""); 
-            
-            // step 2. find decimal separator replace it with dot and remove all other separators
-            decimalSeparatorPos = Integer.max(strNum.lastIndexOf("."), strNum.lastIndexOf(","));
-            
-            if (decimalSeparatorPos > 0) {
-                decimalSeparatorPos = strNum.length() - decimalSeparatorPos;              
+        try {
+            if (numberOfDifferentSeparators > 2) throw new WrongDecimalFormatException();
+            else {
+                decimalSeparatorPos = Integer.max(strNum.lastIndexOf("."), strNum.lastIndexOf(","));
+                
+                decimalSeparatorPos = (decimalSeparatorPos > 0 ? strNum.length() - decimalSeparatorPos : 0);
+                
+                if (decimalSeparatorPos         == 4
+                &&  numberOfDifferentSeparators == 1) {
+                    decimalSeparatorPos = 0;
+                }
+                
+                // step 2. delete all separators
+                strNum = strNum.replaceAll(" ", "");
                 strNum = strNum.replaceAll("\\,", "");
                 strNum = strNum.replaceAll("\\.", "");
-                strNum = String.format( "%s,%s", 
-                                        strNum.substring(0, strNum.length() - decimalSeparatorPos + 1), 
-                                        strNum.substring(strNum.length() - decimalSeparatorPos + 1, strNum.length()));
-            }
-                       
-            // step 3. convert to real
-            try {
-                realNum = Double.parseDouble(strNum);
                 
-                System.out.format(" -> %f", realNum);
-            } catch (NumberFormatException e) {
-                System.out.println(e.getMessage());
-                e.printStackTrace(System.out);
-            }          
+                // step 3. insert decimal separator (if existed)
+                if (decimalSeparatorPos > 0) {                                 
+                    strNum = String.format( "%s.%s", 
+                                            strNum.substring(0, strNum.length() - decimalSeparatorPos + 1), 
+                                            strNum.substring(strNum.length() - decimalSeparatorPos + 1, strNum.length()));
+                }
+                
+                // step 4. convert to real
+                try {
+                    doubleNum = Double.parseDouble(strNum);
+
+                    return doubleNum;
+                } catch (NumberFormatException e) {
+                    throw new WrongDecimalFormatException();
+                } 
+            }
+        } catch (WrongDecimalFormatException e) {
+            System.out.print(e.getMessage());
         }
+              
+        return null;
     }
-}
