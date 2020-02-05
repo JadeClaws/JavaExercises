@@ -58,7 +58,7 @@ class StringDecimalsConversion {
     
     
     public static void test() {
-        Map <String, Double>    mapTestStringDecimals;  // input - map of list decimals and expected results
+        Map <String, Double>    mapTestStringDecimals;  // input - map of string decimals and expected results
        
         
         mapTestStringDecimals = new LinkedHashMap<>(); // to preserve input order
